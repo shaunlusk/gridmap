@@ -1,3 +1,5 @@
+var SL = SL || {};
+
 /**
 * @class For representing a 2d map as a grid of cells.
 */
