@@ -14,7 +14,7 @@
   "author": "Shaun Lusk",
   "license": "MIT",
   "dependencies": {
-    "slcommon": "shaunlusk/slcommon^0.1.2"
+    "slcommon": "shaunlusk/slcommon#0.1.2"
   },
   "devDependencies": {
     "mocha": "^4.0.1"
