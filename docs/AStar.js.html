@@ -1,4 +1,32 @@
-var SL = SL || {};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AStar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AStar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var SL = SL || {};
 
 /** IHeuristicProvider
 * Provides an estimate of the past cost from node to goal.
@@ -22,7 +50,7 @@ SL.INeighborProvider = function() {};
 /**
 * @function
 * @name INeighborProvider#next
-* @returns {Node<T>} returns the next neighbor for the current node (must iterate over all neighbors, returning null when none are left).
+* @returns {Node&lt;T>} returns the next neighbor for the current node (must iterate over all neighbors, returning null when none are left).
 */
 SL.INeighborProvider.prototype.next = function() { throw new Error('not implemented'); };
 
@@ -35,13 +63,13 @@ SL.INeighborProviderFactory = function() {};
 * @function
 * @name INeighborProviderFactory#getProvider
 * @param node {SL.AStarNode} the node to retrieve the neighbor provider for
-* @returns {Node<T>} gets a neighbor provider
+* @returns {Node&lt;T>} gets a neighbor provider
 */
 SL.INeighborProviderFactory.prototype.getProvider = function(node) { throw new Error('not implemented'); };
 
 /** @class Node class for AStar
 * @param element {Object} any object; must implement "equals()"
-* @param parent {AStarNode<T>} this node's parent node.
+* @param parent {AStarNode&lt;T>} this node's parent node.
 * @param g {int} this node's g() cost.
 */
 SL.AStarNode = function (element, parent, g) {
@@ -51,17 +79,17 @@ SL.AStarNode = function (element, parent, g) {
 	this.g = g;
 };
 /** Compare this node's f() cost to another node
-* @param other {AStarNode<T>} the node to compare against
-* @return {int} -1 if this node's f() is < the other's; 0 if they are the same; and 1 if this node's f() > the others.
+* @param other {AStarNode&lt;T>} the node to compare against
+* @return {int} -1 if this node's f() is &lt; the other's; 0 if they are the same; and 1 if this node's f() > the others.
 */
 SL.AStarNode.prototype.compareTo = function(other) {
-	if (this.f < other.f) return -1;
+	if (this.f &lt; other.f) return -1;
 	if (this.f === other.f) return 0;
 	return 1;
 };
 
 /** Check if another node has the same element as this one.
-* @param other {AStarNode<T>} the node to compare against
+* @param other {AStarNode&lt;T>} the node to compare against
 * @return {boolean} true if the two nodes are the same, or have equal elements, false otherwise
 */
 SL.AStarNode.prototype.equals = function(other) {
@@ -89,17 +117,17 @@ SL.AStarNode.prototype.getCost = function() {
 };
 
 
-/** @class AStar implementation
-* @param start {Node<T>} The starting point
-* @param goal {Node<T>} The desired ending point
+/** @class SL.AStar implementation
+* @param start {Node&lt;T>} The starting point
+* @param goal {Node&lt;T>} The desired ending point
 * @param depthConstraint {int} The maximum path depth to search before giving up. 0 = no limit!
-* @param neighborProviderFactory {INeighborProviderFactory<T>}
-* @param hProvider {IHeuristicProvider<T>}
+* @param neighborProviderFactory {INeighborProviderFactory&lt;T>}
+* @param hProvider {IHeuristicProvider&lt;T>}
 */
-SL.AStarPathProvider = function (start, goal, depthConstraint, /*INeighborProviderFactory<T>*/ neighborProviderFactory, /*IHeuristicProvider<T>*/ hProvider) {
+SL.AStarPathProvider = function (start, goal, depthConstraint, /*INeighborProviderFactory&lt;T>*/ neighborProviderFactory, /*IHeuristicProvider&lt;T>*/ hProvider) {
 
 	this.open = new SL.PriorityQueue();
-	// private HashMap<Node<T>,Node<T>> closed;
+	// private HashMap&lt;Node&lt;T>,Node&lt;T>> closed;
 	this.closed = {};
 	this.goal = goal;
 	this.best = start;
@@ -112,7 +140,7 @@ SL.AStarPathProvider = function (start, goal, depthConstraint, /*INeighborProvid
 
 /** Do the path finding.
 * If a complete path cannot be found, it will return only the starting node.  If the depth constraint is hit, the best partial path is returned.
-* @return {Array<SL.AStarNode<T>>} An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
+* @return {Array&lt;SL.AStarNode&lt;T>>} An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
 */
 SL.AStarPathProvider.prototype.execute = function() {
 	var current;
@@ -123,27 +151,27 @@ SL.AStarPathProvider.prototype.execute = function() {
 			return this._getPath(current);
 		this.closed[current.hashCode()] = current;
 
-		if (current.f-current.g < this.best.f-this.best.g) this.best = current;
+		if (current.f-current.g &lt; this.best.f-this.best.g) this.best = current;
 		//Constrain search
-		if (this.depthConstraint > 0 && current.g >= this.depthConstraint) {
+		if (this.depthConstraint > 0 &amp;&amp; current.g >= this.depthConstraint) {
 			continue;
 		}
 
-		var np = this.neighborProviderFactory.getProvider(current); //INeighborProvider<T>
+		var np = this.neighborProviderFactory.getProvider(current); //INeighborProvider&lt;T>
 		var neighbor;
 		while ((neighbor = np.next()) !== null){
 			var cost = current.g + neighbor.getCost();
 			neighbor.g = cost;
 			var neighbor2;
 			if (this.open.contains(neighbor)) {
-				if (neighbor.g < (neighbor2 = this.open.getByEquality(neighbor)).g) {
+				if (neighbor.g &lt; (neighbor2 = this.open.getByEquality(neighbor)).g) {
 					this.open.remove(neighbor2);
 					neighbor.f = neighbor.g + this.hProvider.h(neighbor, this.goal);
 					this.open.push(neighbor);
 				}
 				// it's in open, and this one is not better, do nothing.
 			} else if (neighbor.hashCode() in this.closed) {
-				if (neighbor.g < (neighbor2 = this.closed[neighbor.hashCode()]).g) {
+				if (neighbor.g &lt; (neighbor2 = this.closed[neighbor.hashCode()]).g) {
 					delete this.closed[neighbor2.hashCode()];
 					neighbor.f = neighbor.g + this.hProvider.h(neighbor, this.goal);
 					this.open.push(neighbor);
@@ -162,7 +190,7 @@ SL.AStarPathProvider.prototype.execute = function() {
 
 /*  Get list of the nodes from the origin to the specified node
 * @param node {SL.AStarNode} The node
-* @return {Array<SL.AStarNode>} The list
+* @return {Array&lt;SL.AStarNode>} The list
 */
 SL.AStarPathProvider.prototype._getPath = function(node) {
 	var reversePath = [], path = [];
@@ -176,3 +204,26 @@ SL.AStarPathProvider.prototype._getPath = function(node) {
 	}
 	return path;
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SL.AStarNode.html">AStarNode</a></li><li><a href="SL.AStarPathProvider.html">AStarPathProvider</a></li><li><a href="SL.Coordinates.html">Coordinates</a></li><li><a href="SL.DefaultGridCellFactory.html">DefaultGridCellFactory</a></li><li><a href="SL.GridCell.html">GridCell</a></li><li><a href="SL.GridMap.html">GridMap</a></li><li><a href="SL.GridMapNeighborProvider.html">GridMapNeighborProvider</a></li><li><a href="SL.GridMapNeighborProviderFactory.html">GridMapNeighborProviderFactory</a></li></ul><h3>Interfaces</h3><ul><li><a href="SL.IHeuristicProvider.html">IHeuristicProvider</a></li><li><a href="SL.INeighborProvider.html">INeighborProvider</a></li><li><a href="SL.INeighborProviderFactory.html">INeighborProviderFactory</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 30 2017 22:19:17 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
