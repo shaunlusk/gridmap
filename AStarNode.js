@@ -4,14 +4,14 @@ var SL = SL || {};
 * Acts as a container for arbitrary map nodes or elements.
 * Provides parent tracking and cost functionality.
 * @param element {Object} Any object; must implement "equals()"
-* @param parent {AStarNode<T>} This node's parent node.
+* @param parent {SL.AStarNode} This node's parent node.
 * @param g {int} This node's g() cost.
 * @see SL.AStarPathFinder
 */
 SL.AStarNode = function (element, parent, g) {
 	/** @property element {Object} Any object; must implement "equals()" */
 	this.element = element;
-	/** @property {AStarNode<T>} This node's parent node. */
+	/** @property {SL.AStarNode} This node's parent node. */
 	this.parent = parent;
 	/** @property f {int} This node's estimated cost. */
 	this.f = -1;
@@ -19,7 +19,7 @@ SL.AStarNode = function (element, parent, g) {
 	this.g = g;
 };
 /** Compare this node's f() cost to another node
-* @param other {AStarNode<T>} the node to compare against
+* @param other {SL.AStarNode} the node to compare against
 * @return {int} -1 if this node's f() is < the other's; 0 if they are the same; and 1 if this node's f() > the others.
 */
 SL.AStarNode.prototype.compareTo = function(other) {
@@ -29,7 +29,7 @@ SL.AStarNode.prototype.compareTo = function(other) {
 };
 
 /** Check if another node has the same element as this one.
-* @param other {AStarNode<T>} the node to compare against
+* @param other {SL.AStarNode} the node to compare against
 * @return {boolean} true if the two nodes are the same, or have equal elements, false otherwise
 */
 SL.AStarNode.prototype.equals = function(other) {
@@ -55,11 +55,10 @@ SL.AStarNode.prototype.toString = function() {
 	return "Element: " + this.element.toString() + "\nf: " + this.f + "\ng: " + this.g + "\n";
 };
 
-/** Return the cost of this Node.
-* I'm not sure what my original thinking was, having this separate from
-* the g property; it is only checked once.  If it bothers you, you may override it.
+/** Return the path cost of this Node.
+* If you need path costs that vary by Node, override this method.
 * @return {string}
 */
 SL.AStarNode.prototype.getCost = function() {
-	return this.g;
+	return 1;
 };
