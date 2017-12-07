@@ -16,90 +16,50 @@ SL.IHeuristicProvider.prototype.h = function(node, goal) { throw new Error('not 
 
 /** INeighborProvider
 * Provides neighbors for a given node.
+* (Must iterate over all neighbors, returning null when none are left).
 * @interface
 */
 SL.INeighborProvider = function() {};
 /**
+* Retrieves the next available neighbor.
 * @function
 * @name INeighborProvider#next
-* @returns {Node<T>} returns the next neighbor for the current node (must iterate over all neighbors, returning null when none are left).
+* @returns {Node<T>} returns the next neighbor for the current node, or null if none remain.
 */
 SL.INeighborProvider.prototype.next = function() { throw new Error('not implemented'); };
 
 /** INeighborProviderFactory
-* gets a neighbor provider, given the current node
+* Responsible for creating a neighbor provider for a given AStarNode.
 * @interface
 */
 SL.INeighborProviderFactory = function() {};
 /**
 * @function
 * @name INeighborProviderFactory#getProvider
-* @param node {SL.AStarNode} the node to retrieve the neighbor provider for
+* @param node {SL.AStarNode} The node to retrieve the neighbor provider for.
 * @returns {Node<T>} gets a neighbor provider
 */
 SL.INeighborProviderFactory.prototype.getProvider = function(node) { throw new Error('not implemented'); };
 
-/** @class Node class for AStar
-* @param element {Object} any object; must implement "equals()"
-* @param parent {AStarNode<T>} this node's parent node.
-* @param g {int} this node's g() cost.
-*/
-SL.AStarNode = function (element, parent, g) {
-	this.element = element;
-	this.parent = parent;
-	this.f = -1;
-	this.g = g;
-};
-/** Compare this node's f() cost to another node
-* @param other {AStarNode<T>} the node to compare against
-* @return {int} -1 if this node's f() is < the other's; 0 if they are the same; and 1 if this node's f() > the others.
-*/
-SL.AStarNode.prototype.compareTo = function(other) {
-	if (this.f < other.f) return -1;
-	if (this.f === other.f) return 0;
-	return 1;
-};
-
-/** Check if another node has the same element as this one.
-* @param other {AStarNode<T>} the node to compare against
-* @return {boolean} true if the two nodes are the same, or have equal elements, false otherwise
-*/
-SL.AStarNode.prototype.equals = function(other) {
-	if (this === other) return true;
-  if (!SL.isFunction(this.element.equals)) {
-    throw new Error("Elements must implement the \"equals()\" function.");
-  }
-	if (this.element.equals(other.element)) return true;
-	return false;
-};
-
-/** Return the toString of the Element; not reliable as a true hash function.
-* @return {string}
-*/
-SL.AStarNode.prototype.hashCode = function() {
-	return this.element.toString();
-};
-
-SL.AStarNode.prototype.toString = function() {
-	return "Element: " + this.element.toString() + "\nf: " + this.f + "\ng: " + this.g + "\n";
-};
-
-SL.AStarNode.prototype.getCost = function() {
-	return 1;
-};
-
-
-/** @class AStar implementation
-* @param start {Node<T>} The starting point
-* @param goal {Node<T>} The desired ending point
+/** @class Implementation of A* path finding algorithm.
+* <p>The algorithm will find an optimal path between a starting node and a goal
+* node, if one exists.</p>
+* <p>
+* If a path is found, a sequence of {@link SL.AStarNode AStarNodes} will be returned representing the path
+* from the start node to the goal node.
+* </p>
+* <p>You must provide a {@link SL.INeighborProviderFactory INeighborProviderFactory} that creates
+* {@link SL.INeighborProvider INeighborProviders} for each examined AStarNode.  You must also provide an
+* {@link SL.IHeuristicProvider IHeuristicProvider} that gives heuristic cost estimates of distance between {@link SL.AStarNode AStarNodes}.</p>
+* @param start {SL.AStarNode} An AStarNode that contains the starting point
+* @param goal {SL.AStarNode} An AStarNode that contains the goal point
 * @param depthConstraint {int} The maximum path depth to search before giving up. 0 = no limit!
-* @param neighborProviderFactory {INeighborProviderFactory<T>}
-* @param hProvider {IHeuristicProvider<T>}
+* @param neighborProviderFactory {SL.INeighborProviderFactory} INeighborProviderFactory creates an INeighborProvider;
+* INeighborProvider provides the neighbors for a given point.
+* @param hProvider {SL.IHeuristicProvider} Exposes a method that provides a heuristic estimate of distance between a given node and the goal.
 */
-SL.AStarPathProvider = function (start, goal, depthConstraint, /*INeighborProviderFactory<T>*/ neighborProviderFactory, /*IHeuristicProvider<T>*/ hProvider) {
-
+SL.AStarPathFinder = function (start, goal, depthConstraint, /*INeighborProviderFactory<T>*/ neighborProviderFactory, /*IHeuristicProvider<T>*/ hProvider) {
 	this.open = new SL.PriorityQueue();
-	// private HashMap<Node<T>,Node<T>> closed;
 	this.closed = {};
 	this.goal = goal;
 	this.best = start;
@@ -112,9 +72,9 @@ SL.AStarPathProvider = function (start, goal, depthConstraint, /*INeighborProvid
 
 /** Do the path finding.
 * If a complete path cannot be found, it will return only the starting node.  If the depth constraint is hit, the best partial path is returned.
-* @return {Array<SL.AStarNode<T>>} An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
+* @return {Array<SL.AStarNode>} An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
 */
-SL.AStarPathProvider.prototype.execute = function() {
+SL.AStarPathFinder.prototype.execute = function() {
 	var current;
 	this.best.f = this.hProvider.h(this.best, this.goal);
 
@@ -160,11 +120,12 @@ SL.AStarPathProvider.prototype.execute = function() {
 	return this.best === null ? null : this._getPath(this.best);
 };
 
-/*  Get list of the nodes from the origin to the specified node
+/** @private */
+/* Get list of the nodes from the origin to the specified node
 * @param node {SL.AStarNode} The node
 * @return {Array<SL.AStarNode>} The list
 */
-SL.AStarPathProvider.prototype._getPath = function(node) {
+SL.AStarPathFinder.prototype._getPath = function(node) {
 	var reversePath = [], path = [];
 	var n = node;
 	do {

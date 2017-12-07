@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: AStarPathFinder</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: AStarPathFinder</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="SL.html">SL</a>.</span>AStarPathFinder<span class="signature">(start, goal, depthConstraint, neighborProviderFactory, hProvider)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Implementation of A* path finding algorithm.<p>The algorithm will find an optimal path between a starting node and a goalnode, if one exists.</p><p>If a path is found, a sequence of <a href="SL.AStarNode.html">AStarNodes</a> will be returned representing the pathfrom the start node to the goal node.</p><p>You must provide a <a href="SL.INeighborProviderFactory.html">INeighborProviderFactory</a> that creates<a href="SL.INeighborProvider.html">INeighborProviders</a> for each examined AStarNode.  You must also provide an<a href="SL.IHeuristicProvider.html">IHeuristicProvider</a> that gives heuristic cost estimates of distance between <a href="SL.AStarNode.html">AStarNodes</a>.</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="AStarPathFinder"><span class="type-signature"></span>new AStarPathFinder<span class="signature">(start, goal, depthConstraint, neighborProviderFactory, hProvider)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="SL.AStarNode.html">SL.AStarNode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An AStarNode that contains the starting point</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>goal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="SL.AStarNode.html">SL.AStarNode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An AStarNode that contains the goal point</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>depthConstraint</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The maximum path depth to search before giving up. 0 = no limit!</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>neighborProviderFactory</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="SL.INeighborProviderFactory.html">SL.INeighborProviderFactory</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">INeighborProviderFactory creates an INeighborProvider;INeighborProvider provides the neighbors for a given point.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hProvider</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="SL.IHeuristicProvider.html">SL.IHeuristicProvider</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Exposes a method that provides a heuristic estimate of distance between a given node and the goal.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="AStar.js.html">AStar.js</a>, <a href="AStar.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="SL.AStarNode.html">SL.AStarNode</a>>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Do the path finding.If a complete path cannot be found, it will return only the starting node.  If the depth constraint is hit, the best partial path is returned.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="AStar.js.html">AStar.js</a>, <a href="AStar.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="SL.AStarNode.html">SL.AStarNode</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SL.AStarNode.html">AStarNode</a></li><li><a href="SL.AStarPathFinder.html">AStarPathFinder</a></li><li><a href="SL.Coordinates.html">Coordinates</a></li><li><a href="SL.DefaultGridCellFactory.html">DefaultGridCellFactory</a></li><li><a href="SL.GridCell.html">GridCell</a></li><li><a href="SL.GridMap.html">GridMap</a></li><li><a href="SL.GridMapNeighborProvider.html">GridMapNeighborProvider</a></li><li><a href="SL.GridMapNeighborProviderFactory.html">GridMapNeighborProviderFactory</a></li></ul><h3>Namespaces</h3><ul><li><a href="SL.html">SL</a></li></ul><h3>Interfaces</h3><ul><li><a href="SL.IHeuristicProvider.html">IHeuristicProvider</a></li><li><a href="SL.INeighborProvider.html">INeighborProvider</a></li><li><a href="SL.INeighborProviderFactory.html">INeighborProviderFactory</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 06 2017 21:17:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

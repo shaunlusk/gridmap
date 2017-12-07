@@ -1,3 +1,4 @@
+/** @namespace */
 var SL = SL || {};
 
 /**
@@ -493,7 +494,7 @@ SL.GridMap.prototype.entitiesHaveLineOfSight = function(one, other) {
 * @return {Array<Coordinates>} A list of coordinates, from start to goal inclusive; null if no path was found.
 */
 SL.GridMap.prototype.findPath = function(start, goal) {
-	var aStar = new AStarPathProvider(
+	var aStar = new AStarPathFinder(
 			new AStarNode(start, null, 0),
 			new AStarNode(goal, null, 0),
 			this.aStarDepthConstraint,

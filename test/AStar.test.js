@@ -1,7 +1,7 @@
 var SL = SL || {};
 var AStar = SL.AStar;
 var AStarNode = SL.AStarNode;
-var AStarPathProvider = SL.AStarPathProvider;
+var AStarPathFinder = SL.AStarPathFinder;
 
 describe("AStarNode", function(){
   describe("#compareTo()", function(){
@@ -74,7 +74,7 @@ describe("AStar",function() {
         AStarNode1 = new AStarNode(getAStarElement(2), AStarNode1, 0);
         AStarNode1 = new AStarNode(getAStarElement(1), AStarNode1, 0);
 
-        var astar = new AStarPathProvider(null, null, 0, null, null);
+        var astar = new AStarPathFinder(null, null, 0, null, null);
         var list = astar._getPath(AStarNode1);
 
         assert( list[0].element.value === 10, "expected 10, got:" + list[0].element.value );

@@ -5,7 +5,7 @@ var GridMapNeighborProvider = SL.GridMapNeighborProvider;
 var GridMapNeighborProviderFactory = SL.GridMapNeighborProviderFactory;
 var AStar = SL.AStar;
 var AStarNode = SL.AStarNode;
-var AStarPathProvider = SL.AStarPathProvider;
+var AStarPathFinder = SL.AStarPathFinder;
 
 describe("Direction", function() {
   describe("#ordinal()", function(){

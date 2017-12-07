@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A simple grid-based map in JavaScript for games and similar applications.",
   "main": "GridMap.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/shaunlusk/gridmap.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
