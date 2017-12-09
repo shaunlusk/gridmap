@@ -31,7 +31,7 @@
         <h2><span class="attribs"><span class="type-signature"></span></span>
             <span class="ancestors"><a href="SL.html">SL</a>.</span>GridCell<span class="signature">(contents)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Used by the grid map.  Represents a cell on the map.</div>
+            <div class="class-description">Used by the <a href="SL.GridMap.html">GridMap</a>.  Represents a cell on the map.</div>
         
     
 </header>
@@ -92,7 +92,7 @@
             <td class="type">
             
                 
-<span class="param-type">Entity</span>
+<span class="param-type">SL.GridMapEntity</span>
 
 
             
@@ -197,7 +197,7 @@
     
 
     
-    <h4 class="name" id="getContents"><span class="type-signature"></span>getContents<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getContents"><span class="type-signature"></span>getContents<span class="signature">()</span><span class="type-signature"> &rarr; {SL.GridMapEntity}</span></h4>
     
 
     
@@ -205,7 +205,7 @@
 
 
 <div class="description">
-    Get the Entity in this cell (may be null)
+    Get the Entity in this cell or null if none.
 </div>
 
 
@@ -249,7 +249,272 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line11">line 11</a>
+        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The entity in this cell or null.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">SL.GridMapEntity</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="isFree"><span class="type-signature"></span>isFree<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Return whether there is an entity in this cell.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if contents is null, false otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setContents"><span class="type-signature"></span>setContents<span class="signature">(entity)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Set the Entity in this cell.  Will overwrite existing contents.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">SL.GridMapEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The entity to put in this cell.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -293,13 +558,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SL.AStarNode.html">AStarNode</a></li><li><a href="SL.AStarPathFinder.html">AStarPathFinder</a></li><li><a href="SL.Coordinates.html">Coordinates</a></li><li><a href="SL.DefaultGridCellFactory.html">DefaultGridCellFactory</a></li><li><a href="SL.GridCell.html">GridCell</a></li><li><a href="SL.GridMap.html">GridMap</a></li><li><a href="SL.GridMapNeighborProvider.html">GridMapNeighborProvider</a></li><li><a href="SL.GridMapNeighborProviderFactory.html">GridMapNeighborProviderFactory</a></li></ul><h3>Namespaces</h3><ul><li><a href="SL.html">SL</a></li></ul><h3>Interfaces</h3><ul><li><a href="SL.IHeuristicProvider.html">IHeuristicProvider</a></li><li><a href="SL.INeighborProvider.html">INeighborProvider</a></li><li><a href="SL.INeighborProviderFactory.html">INeighborProviderFactory</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SL.AStarNode.html">AStarNode</a></li><li><a href="SL.AStarPathFinder.html">AStarPathFinder</a></li><li><a href="SL.Coordinates.html">Coordinates</a></li><li><a href="SL.DefaultGridCellFactory.html">DefaultGridCellFactory</a></li><li><a href="SL.GridCell.html">GridCell</a></li><li><a href="SL.GridMap.html">GridMap</a></li><li><a href="SL.GridMapNeighborProvider.html">GridMapNeighborProvider</a></li><li><a href="SL.GridMapNeighborProviderFactory.html">GridMapNeighborProviderFactory</a></li></ul><h3>Namespaces</h3><ul><li><a href="SL.html">SL</a></li></ul><h3>Interfaces</h3><ul><li><a href="SL.IGridCellFactory.html">IGridCellFactory</a></li><li><a href="SL.IHeuristicProvider.html">IHeuristicProvider</a></li><li><a href="SL.INeighborProvider.html">INeighborProvider</a></li><li><a href="SL.INeighborProviderFactory.html">INeighborProviderFactory</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Dec 06 2017 21:17:34 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Dec 09 2017 16:41:44 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

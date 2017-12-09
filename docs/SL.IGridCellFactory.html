@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: GridMapNeighborProviderFactory</title>
+    <title>JSDoc: Interface: IGridCellFactory</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: GridMapNeighborProviderFactory</h1>
+    <h1 class="page-title">Interface: IGridCellFactory</h1>
 
     
 
@@ -28,10 +28,8 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="SL.html">SL</a>.</span>GridMapNeighborProviderFactory<span class="signature">(map)</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">Factory to instantiate SL.GridMapNeighborProvider</div>
+        <h2>
+            <span class="ancestors"><a href="SL.html">SL</a>.</span>IGridCellFactory</h2>
         
     
 </header>
@@ -40,78 +38,10 @@
     <div class="container-overview">
     
         
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="GridMapNeighborProviderFactory"><span class="type-signature"></span>new GridMapNeighborProviderFactory<span class="signature">(map)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
+            <div class="description">Interface for a factory that produces <a href="SL.GridCell.html">GridCells</a>.Provide your own <a href="SL.IGridCellFactory.html">IGridCellFactory</a> so <a href="SL.GridMap.html">GridMap</a> can layout your map.</div>
         
 
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>map</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="SL.GridMap.html">SL.GridMap</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the grid map to use to create the neighbor provider</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
 
 
 <dl class="details">
@@ -143,34 +73,26 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GridMap.js.html">GridMap.js</a>, <a href="GridMap.js.html#line583">line 583</a>
+        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="SL.DefaultGridCellFactory.html">DefaultGridCellFactory</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -197,7 +119,7 @@
     
 
     
-    <h4 class="name" id="getProvider"><span class="type-signature"></span>getProvider<span class="signature">(node)</span><span class="type-signature"> &rarr; {<a href="INeighborProvider.html">INeighborProvider</a>}</span></h4>
+    <h4 class="name" id="getGridCell"><span class="type-signature"></span>getGridCell<span class="signature">(x, y)</span><span class="type-signature"> &rarr; {<a href="SL.GridCell.html">SL.GridCell</a>}</span></h4>
     
 
     
@@ -205,7 +127,7 @@
 
 
 <div class="description">
-    Get a neighbor provider for the specified node
+    Creates a <a href="SL.GridCell.html">GridCell</a> for the specified x, y location on the map.
 </div>
 
 
@@ -241,13 +163,13 @@
 
         <tr>
             
-                <td class="name"><code>node</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">AStarNode</span>
+<span class="param-type">int</span>
 
 
             
@@ -257,7 +179,30 @@
 
             
 
-            <td class="description last">the node to get the neighbor provider for</td>
+            <td class="description last">The x coordinate.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The y coordinate.</td>
         </tr>
 
     
@@ -298,7 +243,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GridMap.js.html">GridMap.js</a>, <a href="GridMap.js.html#line590">line 590</a>
+        <a href="GridCell.js.html">GridCell.js</a>, <a href="GridCell.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -324,10 +269,6 @@
 <h5>Returns:</h5>
 
         
-<div class="param-desc">
-    a grid map neighbor provider.
-</div>
-
 
 
 <dl>
@@ -336,7 +277,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="INeighborProvider.html">INeighborProvider</a></span>
+<span class="param-type"><a href="SL.GridCell.html">SL.GridCell</a></span>
 
 
     </dd>

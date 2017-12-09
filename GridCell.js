@@ -14,7 +14,7 @@ SL.GridCell = function(contents) {
 SL.GridCell.prototype.getContents = function () { return this._contents; };
 
 /** Set the Entity in this cell.  Will overwrite existing contents.
-* @param {SL.GridMapEntity} entity The entityto put in this cell.
+* @param entity {SL.GridMapEntity} The entity to put in this cell.
 */
 SL.GridCell.prototype.setContents = function (entity) {this._contents = entity;};
 
@@ -24,27 +24,33 @@ SL.GridCell.prototype.setContents = function (entity) {this._contents = entity;}
 SL.GridCell.prototype.isFree = function () {	return this._contents === null;	};
 
 
-/** @interface
-*
+/**
+* Interface for a factory that produces {@link SL.GridCell GridCells}.
+* Provide your own {@link SL.IGridCellFactory IGridCellFactory} so {@link SL.GridMap GridMap} can layout your map.
+* @interface
+* @see {@link SL.DefaultGridCellFactory DefaultGridCellFactory}
 */
 SL.IGridCellFactory = function() {};
 /**
-* @param x {int}
-*	@param y {int}
+* Creates a {@link SL.GridCell GridCell} for the specified x, y location on the map.
+* @param x {int} The x coordinate.
+*	@param y {int} The y coordinate.
 * @returns {SL.GridCell}
 */
 SL.IGridCellFactory.prototype.getGridCell = function(x, y) { throw new Error('not implemented'); };
 
 /**
 * @class
-* Default implementation of an interface.
-* Must implement getGridCell(x,y) function.
-* Provide one of these so GridMap can layout your map.
+* Default implementation of a {@link SL.IGridCellFactory IGridCellFactory}.
+* Creates empty {@link SL.GridCell GridCells} for each point on the map.
+* @see {@link SL.IGridCellFactory IGridCellFactory}
 */
 SL.DefaultGridCellFactory = function() {};
 
-/** Generate the {@link SL.GridCell GridCell} for the provided coordinates
-*
+/** Generate the {@link SL.GridCell GridCell} for the provided coordinates.
+* @param x {int} The x coordinate.
+*	@param y {int} The y coordinate.
+* @returns {SL.GridCell}
 */
 SL.DefaultGridCellFactory.prototype.getGridCell = function (x,y) {
   return new SL.GridCell();
