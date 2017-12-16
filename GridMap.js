@@ -131,14 +131,14 @@ SL.GridMap.prototype.moveEntityTo = function (entity, coords) {
 };
 
 /**
-* Returns an array of available Directions for a given set of coords.
+* Returns an array of available SL.Directions for a given set of coords.
 * (that is, the directions of free spaces around a point)
 * @param coords {Coordinates} coordinates
 * @returns {Array} list of directions
 */
 SL.GridMap.prototype.findAvailableDirectionsForCoordinates = function (coords) {
   var list = [];
-  for (var i = 0; i < Direction.values.length; i++) {
+  for (var i = 0; i < SL.Direction.values.length; i++) {
     if (this.isFree(SL.GridMap.directionToCoordinates(Direction.values[i], coords))) list.push(Direction.values[i]);
   }
   return list;
@@ -153,7 +153,7 @@ SL.GridMap.prototype.buildListOfAdjacentEntities = function(c) {
   var list = [];
   var adjacent;
   var entity;
-  for (var i = 0; i < Direction.values.length; i++) {
+  for (var i = 0; i < SL.Direction.values.length; i++) {
     adjacent = SL.GridMap.directionToCoordinates(Direction.values[i], c);
     if (this.isInBounds(adjacent)) {
       entity = this.get(adjacent).getContents();
@@ -173,7 +173,7 @@ SL.GridMap.prototype.buildListOfSpecificAdjacentEntities = function(c, type) {
   var list = [];
   var adjacent;
   var entity;
-  for (var i = 0; i < Direction.values.length; i++) {
+  for (var i = 0; i < SL.Direction.values.length; i++) {
     adjacent = SL.GridMap.directionToCoordinates(Direction.values[i], c);
     if (this.isInBounds(adjacent)) {
       entity = this.get(adjacent).getContents();
@@ -292,9 +292,9 @@ SL.GridMap.prototype.getCoordinatesInRange = function(origin, range, includeOrig
 SL.GridMap.prototype._getCoordinatesInRange = function(origin,range,hash) {
   var c = null;
   if (range === 0) return;
-  for (var d = 0; d < Direction.values.length; d++) {
-    if (!this.allowDiagonalMovement && Direction.isDiagonal(Direction.values[d])) continue;
-    c = new SL.Coordinates( origin.x + Direction.offsets[d].x, origin.y + Direction.offsets[d].y );
+  for (var d = 0; d < SL.Direction.values.length; d++) {
+    if (!this.allowDiagonalMovement && SL.Direction.isDiagonal(Direction.values[d])) continue;
+    c = new SL.Coordinates( origin.x + SL.Direction.offsets[d].x, origin.y + SL.Direction.offsets[d].y );
     if (!this.isInBounds(c)) continue;
     hash[c.toString()] = c;
     this._getCoordinatesInRange(c,range - 1,hash);
@@ -305,7 +305,7 @@ SL.GridMap.prototype._getCoordinatesInRange = function(origin,range,hash) {
 /**
 * Given a set of coordinates, finds the adjacent coords for the given direction.
 * @static
-* @param direction {String} a direction, based on values in Direction.
+* @param direction {String} a direction, based on values in SL.Direction.
 * @param currentCoords {Coordinates} the target coordinates
 * @return {Coordinates} the coords
 */
@@ -313,31 +313,31 @@ SL.GridMap.directionToCoordinates = function(direction,currentCoords) {
   var x = currentCoords.x;
   var y = currentCoords.y;
   switch (direction) {
-  case Direction.NORTH:
+  case SL.Direction.NORTH:
     y -= 1;
     break;
-  case Direction.NORTHEAST:
+  case SL.Direction.NORTHEAST:
     y -= 1;
     x += 1;
     break;
-  case Direction.EAST:
+  case SL.Direction.EAST:
     x += 1;
     break;
-  case Direction.SOUTHEAST:
+  case SL.Direction.SOUTHEAST:
     y += 1;
     x += 1;
     break;
-  case Direction.SOUTH:
+  case SL.Direction.SOUTH:
     y += 1;
     break;
-  case Direction.SOUTHWEST:
+  case SL.Direction.SOUTHWEST:
     y += 1;
     x -= 1;
     break;
-  case Direction.WEST:
+  case SL.Direction.WEST:
     x -= 1;
     break;
-  case Direction.NORTHWEST:
+  case SL.Direction.NORTHWEST:
     y -= 1;
     x -= 1;
     break;
@@ -416,7 +416,7 @@ SL.GridMap.prototype.getSimilarAvailableDirections = function(coords, direction)
 */
 SL.GridMap.prototype.getAvailableDirections = function(coords) {
 	var list = [];
-	for (var i = 0; i < Direction.values.length; i++) {
+	for (var i = 0; i < SL.Direction.values.length; i++) {
 		if (this.isFree(SL.GridMap.directionToCoordinates(Direction.values[i], coords))) list.push(Direction.values[i]);
 	}
 
@@ -429,7 +429,7 @@ SL.GridMap.prototype.getAvailableDirections = function(coords) {
 */
 SL.GridMap.prototype.findAdjacentFreeCoordinates = function(coords) {
 	var list = [];
-  for (var i = 0; i < Direction.values.length; i++) {
+  for (var i = 0; i < SL.Direction.values.length; i++) {
 		if (this.isFree(SL.GridMap.directionToCoordinates(Direction.values[i], coords))) list.push(SL.GridMap.directionToCoordinates(Direction.values[i], coords));
 	}
 	return list;
@@ -450,7 +450,7 @@ SL.GridMap.coordinatesToDirection = function(srcCoords, tgtCoords) {
 	var boc = bearing / 360 * 8;
 	var dir = (Math.floor(boc) + 2) % 8;
 
-	return Direction.values[dir];
+	return SL.Direction.values[dir];
 };
 
 /** Calculate the direction between source and target coordinates
@@ -568,7 +568,7 @@ SL.GridMapNeighborProvider.prototype.next = function() {
   do {
     if (!this._map.allowDiagonalMovement && this._i%2 === 1) this._i++;
     if (this._i >= 8) return null;
-    var dir = Direction.values[this._i];
+    var dir = SL.Direction.values[this._i];
     neighborCoords = SL.GridMap.directionToCoordinates(dir, this._coords);
     this._i++;
   } while (!this._map.isFree(neighborCoords));
