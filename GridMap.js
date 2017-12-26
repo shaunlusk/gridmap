@@ -489,14 +489,14 @@ SL.GridMap.prototype.entitiesHaveLineOfSight = function(one, other) {
 };
 
 /** Finds the shortest path between the start coords and the goal coords, if one exists.
-* @param start {Coordinates} the coordinates to start searching from.
-* @param goal {Coordinates} the coordiantes to find a path to
-* @return {Array<Coordinates>} A list of coordinates, from start to goal inclusive; null if no path was found.
+* @param {SL.Coordinates} start the coordinates to start searching from.
+* @param {SL.Coordinates} goal the coordiantes to find a path to
+* @return {Array<SL.Coordinates>} A list of coordinates, from start to goal inclusive; null if no path was found.
 */
 SL.GridMap.prototype.findPath = function(start, goal) {
-	var aStar = new AStarPathFinder(
-			new AStarNode(start, null, 0),
-			new AStarNode(goal, null, 0),
+	var aStar = new SL.AStarPathFinder(
+			new SL.AStarNode(start, null, 0),
+			new SL.AStarNode(goal, null, 0),
 			this.aStarDepthConstraint,
       this._gridMapNeighborProviderFactory,
 			this._getHeuristicProvider());
@@ -505,7 +505,7 @@ SL.GridMap.prototype.findPath = function(start, goal) {
 };
 
 /** Converts a list of AStarNodes to a list of Coordinates.
-* @param list {Array<AStarNode>} the list of AStarNodes
+* @param list {Array<SL.AStarNode>} the list of AStarNodes
 * @return a list of Coordinates
 */
 SL.GridMap.prototype._nodeListToCoordsList = function(list) {
@@ -549,7 +549,7 @@ SL.GridMap.prototype._getHeuristicProvider = function() {
 * If allowDiagonalMovement on the provided map is false, then only coordinates primary
 * cardinal directions are returned (N,E,S,W).
 * Will not return neighbors for coordinates that are out of bounds or not free.
-* @param parent {AStarNode} the node to get neighbors for.
+* @param parent {SL.AStarNode} the node to get neighbors for.
 * @param map {SL.GridMap} the map
 */
 SL.GridMapNeighborProvider = function(parent, map) {
@@ -561,7 +561,7 @@ SL.GridMapNeighborProvider = function(parent, map) {
 
 /** Retrieve the next neighbor.
 * @override .
-* @return {AStarNode} a node containing the coordinates for a neighboring map cell; null if none remain.
+* @return {SL.AStarNode} a node containing the coordinates for a neighboring map cell; null if none remain.
 */
 SL.GridMapNeighborProvider.prototype.next = function() {
   var neighborCoords;
@@ -572,7 +572,7 @@ SL.GridMapNeighborProvider.prototype.next = function() {
     neighborCoords = SL.GridMap.directionToCoordinates(dir, this._coords);
     this._i++;
   } while (!this._map.isFree(neighborCoords));
-  return new AStarNode(neighborCoords, this._parent, 0);
+  return new SL.AStarNode(neighborCoords, this._parent, 0);
 };
 
 
@@ -584,7 +584,7 @@ SL.GridMapNeighborProviderFactory = function(map) {
   this._map = map;
 };
 /** Get a neighbor provider for the specified node
-* @param node {AStarNode} the node to get the neighbor provider for
+* @param node {SL.AStarNode} the node to get the neighbor provider for
 * @return {INeighborProvider} a grid map neighbor provider.
 */
 SL.GridMapNeighborProviderFactory.prototype.getProvider = function(node) {
