@@ -1,5 +1,11 @@
 var SL = SL || {};
 
+SL.IGridMapEntity = function() {};
+SL.IGridMapEntity.prototype.setCoords = function(coords) {throw new Error("Not Implemented.");};
+SL.IGridMapEntity.prototype.getCoords = function() {throw new Error("Not Implemented.");};
+SL.IGridMapEntity.prototype.getType = function() {throw new Error("Not Implemented.");};
+SL.IGridMapEntity.prototype.setType = function(type) {throw new Error("Not Implemented.");};
+
 SL.GridMapEntity = function(props) {
   props = props || {};
   this._coords = props.coords;
