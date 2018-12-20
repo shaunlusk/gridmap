@@ -1,0 +1,15 @@
+************************
+*****  Change Log  *****
+************************
+
+0.2.0
+Remove concept of 'Entity'.  GridCells can still have contents/entities, but will not
+interact with the contents in any way.
+Remove GridMapEntity
+Removed get/getXY.  Use getGridCell.
+Removing 'XY' methods (e.g. getXY).  Use methods that require coordinates.
+Introduce getContents and setContents to GridMap.
+buildListOfAdjacentEntities is now getListOfAdjacentEntities
+
+0.1.0
+Initial

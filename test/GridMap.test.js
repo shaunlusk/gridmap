@@ -93,17 +93,6 @@ describe("GridMap",function() {
       done();
     });
   });
-  describe("#removeEntity()", function(){
-    it("should remove the entity from its current SL.GridCell", function(done){
-      var map = getMap();
-      var entity = getMockEntity();
-      var cell = map.cells[1][1];
-      cell.setContents(entity);
-      map.removeEntity(entity);
-      assert(cell.getContents() === null, "cell contents should be null after remove");
-      done();
-    });
-  });
   describe("#isFree()", function(){
     it("should return true when grid cell does not have contents", function(done){
       var map = getMap();
@@ -127,26 +116,6 @@ describe("GridMap",function() {
       done();
     });
   });
-  describe("#isFreeXY()", function(){
-    it("should return true when grid cell does not have contents", function(done){
-      var map = getMap();
-      assert(map.isFreeXY(1,1) === true, "isFree should return true");
-      done();
-    });
-    it("should return false when grid cell has contents", function(done){
-      var map = getMap();
-      var entity = getMockEntity();
-      var cell = map.cells[1][1];
-      cell.setContents(entity);
-      assert(map.isFreeXY(1,1) === false, "isFree should return false");
-      done();
-    });
-    it("should return false when coords are out of bounds", function(done){
-      var map = getMap();
-      assert(map.isFree(-1,-1) === false, "isFree should return false");
-      done();
-    });
-  });
   describe("#isInBounds()", function(){
     it("should return true if coords are inside map boundary", function(done){
       var map = getMap();
@@ -160,74 +129,6 @@ describe("GridMap",function() {
       var coords1 = new SL.Coordinates(-1,-1);
       var coords2 = new SL.Coordinates(10,10);
       assert(map.isInBounds(coords1) === false && map.isInBounds(coords2) === false, "should have returned false");
-      done();
-    });
-  });
-  describe("#isInBoundsXY()", function(){
-    it("should return true if coords are inside map boundary", function(done){
-      var map = getMap();
-      assert(map.isInBoundsXY(0,0) === true && map.isInBoundsXY(9,9) === true, "should have return true");
-      done();
-    });
-    it("should return false if coords are outside map boundary", function(done){
-      var map = getMap();
-      assert(map.isInBoundsXY(-1,-1) === false && map.isInBoundsXY(10,10) === false, "should have return false");
-      done();
-    });
-  });
-  describe("#get()", function() {
-    it("should return the proper SL.GridCell", function (done){
-      var map = getMap();
-      var cell = map.cells[1][1];
-      var entity = getMockEntity();
-      cell.setContents(entity);
-      var coords = new SL.Coordinates(1,1);
-      var newCell = map.get(coords);
-      assert(newCell.getContents() !== null, "the cell should have been the one the entity was placed in");
-      done();
-    });
-  });
-  describe("#getXY()", function() {
-    it("should return the proper SL.GridCell", function (done){
-      var map = getMap();
-      var cell = map.cells[1][1];
-      var entity = getMockEntity();
-      cell.setContents(entity);
-      var newCell = map.getXY(1,1);
-      assert(newCell.getContents() !== null, "the cell should have been the one the entity was placed in");
-      done();
-    });
-  });
-  describe("#moveEntityTo()", function() {
-    it("should move the entity to the specified coords", function (done){
-      var map = getMap();
-      var cell = map.cells[1][1];
-      var entity = getMockEntity();
-      cell.setContents(entity);
-      var coords = new SL.Coordinates(5,8);
-      map.moveEntityTo(entity,coords);
-      var newCell = map.get(coords);
-      assert(newCell.getContents() !== null, "the entity should have been moved to the new cell");
-      assert( cell.getContents() === null, "the entity was not removed from the original cell");
-      done();
-    });
-    it("should throw exception if coords are not free", function (done){
-      var map = getMap();
-      var cell = map.cells[1][1];
-      var entity = getMockEntity();
-      var entity2 = getMockEntity();
-      entity2.coords = new SL.Coordinates(5,8);
-      cell.setContents(entity);
-      var coords = new SL.Coordinates(5,8);
-      var newCell = map.get(coords);
-      newCell.setContents(entity2);
-      var success = false;
-      try {
-        map.moveEntityTo(entity,coords);
-      } catch(e) {
-        success = true;
-      }
-      assert(success === true, "an exception should have been thrown");
       done();
     });
   });
@@ -257,7 +158,7 @@ describe("GridMap",function() {
       done();
     });
   });
-  describe("#buildListOfAdjacentEntities()", function() {
+  describe("#getListOfAdjacentEntities()", function() {
     it("should produce a list entities that are adjacent to the specified coordinates.", function(done){
       // Use space 1,0
       // x: target
@@ -268,62 +169,22 @@ describe("GridMap",function() {
       // |e....
       var map = getMap();
       var cell;
-      // var entity1 = getMockEntity();
-      // entity1.name = "huey";
-      // entity1.coords = new SL.Coordinates(1,0);
-      // cell = map.get(entity1.coords);
-      // cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.name = "dewie";
       entity2.coords = new SL.Coordinates(2,0);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.name = "louie";
       entity3.coords = new SL.Coordinates(0,1);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
 
       var coords = new SL.Coordinates(1,0);
-      var list = map.buildListOfAdjacentEntities(coords);
+      var list = map.getListOfAdjacentEntities(coords);
       assert( list.length === 2, "should have found 2 entities");
       assert( list[0].name === entity2.name || list[0].name === entity3.name, "foreign entity retrieved!");
       assert( list[1].name === entity2.name || list[1].name === entity3.name, "foreign entity retrieved!");
-      done();
-    });
-  });
-  describe("#buildListOfSpecificAdjacentEntities()", function() {
-    it("should produce a list entities of a given type that are adjacent to the specified coordinates.", function(done){
-      // Use space 1,0
-      // x: target
-      // e: some entity
-      // .: free space
-      // ______
-      // |.xe..
-      // |ee...
-      var map = getMap();
-      var cell;
-      var entity1 = getMockEntity();
-      entity1.type = "enemy";
-      entity1.coords = new SL.Coordinates(2,0);
-      cell = map.get(entity1.coords);
-      cell.setContents(entity1);
-      var entity2 = getMockEntity();
-      entity2.type = "ally";
-      entity2.coords = new SL.Coordinates(0,1);
-      cell = map.get(entity2.coords);
-      cell.setContents(entity2);
-      var entity3 = getMockEntity();
-      entity3.type = "enemy";
-      entity3.coords = new SL.Coordinates(1,1);
-      cell = map.get(entity3.coords);
-      cell.setContents(entity3);
-
-      var coords = new SL.Coordinates(1,0);
-      var list = map.buildListOfSpecificAdjacentEntities(coords, "enemy");
-      assert( list.length === 2, "should have found 2 entities");
-      assert( list[0].type === "enemy", "foreign entity retrieved!");
-      assert( list[1].type === "enemy", "foreign entity retrieved!");
       done();
     });
   });
@@ -334,22 +195,22 @@ describe("GridMap",function() {
       var entity1 = getMockEntity();
       entity1.type = "enemy";
       entity1.coords = new SL.Coordinates(2,2);
-      cell = map.get(entity1.coords);
+      cell = map.getGridCell(entity1.coords);
       cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.type = "ally";
       entity2.coords = new SL.Coordinates(3,3);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.type = "enemy";
       entity3.coords = new SL.Coordinates(8,8);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
       var entity4 = getMockEntity();
       entity4.type = "enemy";
       entity4.coords = new SL.Coordinates(8,9);
-      cell = map.get(entity4.coords);
+      cell = map.getGridCell(entity4.coords);
       cell.setContents(entity4);
 
       var topLeft = new SL.Coordinates(1,1);
@@ -364,22 +225,22 @@ describe("GridMap",function() {
       var entity1 = getMockEntity();
       entity1.type = "enemy";
       entity1.coords = new SL.Coordinates(2,2);
-      cell = map.get(entity1.coords);
+      cell = map.getGridCell(entity1.coords);
       cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.type = "ally";
       entity2.coords = new SL.Coordinates(3,3);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.type = "enemy";
       entity3.coords = new SL.Coordinates(8,8);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
       var entity4 = getMockEntity();
       entity4.type = "enemy";
       entity4.coords = new SL.Coordinates(8,9);
-      cell = map.get(entity4.coords);
+      cell = map.getGridCell(entity4.coords);
       cell.setContents(entity4);
 
       var topLeft = new SL.Coordinates(1,1);
@@ -394,22 +255,22 @@ describe("GridMap",function() {
       var entity1 = getMockEntity();
       entity1.type = "enemy";
       entity1.coords = new SL.Coordinates(2,2);
-      cell = map.get(entity1.coords);
+      cell = map.getGridCell(entity1.coords);
       cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.type = "ally";
       entity2.coords = new SL.Coordinates(3,3);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.type = "enemy";
       entity3.coords = new SL.Coordinates(8,8);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
       var entity4 = getMockEntity();
       entity4.type = "enemy";
       entity4.coords = new SL.Coordinates(8,9);
-      cell = map.get(entity4.coords);
+      cell = map.getGridCell(entity4.coords);
       cell.setContents(entity4);
 
       var topLeft = new SL.Coordinates(1,1);
@@ -433,15 +294,15 @@ describe("GridMap",function() {
       var cell;
       var entity1 = getMockEntity();
       entity1.coords = new SL.Coordinates(0,0);
-      cell = map.get(entity1.coords);
+      cell = map.getGridCell(entity1.coords);
       cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.coords = new SL.Coordinates(1,0);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.coords = new SL.Coordinates(0,1);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
 
       var coords = map.generateRandomFreeCoordinates();
@@ -484,15 +345,15 @@ describe("GridMap",function() {
       var cell;
       var entity1 = getMockEntity();
       entity1.coords = new SL.Coordinates(1,1);
-      cell = map.get(entity1.coords);
+      cell = map.getGridCell(entity1.coords);
       cell.setContents(entity1);
       var entity2 = getMockEntity();
       entity2.coords = new SL.Coordinates(1,2);
-      cell = map.get(entity2.coords);
+      cell = map.getGridCell(entity2.coords);
       cell.setContents(entity2);
       var entity3 = getMockEntity();
       entity3.coords = new SL.Coordinates(2,1);
-      cell = map.get(entity3.coords);
+      cell = map.getGridCell(entity3.coords);
       cell.setContents(entity3);
       var topLeft = new SL.Coordinates(1,1);
       var bottomRight = new SL.Coordinates(2,2);
@@ -603,7 +464,7 @@ describe("GridMap",function() {
       var list;
       var entity = getMockEntity();
       entity.coords = new SL.Coordinates(1,0);
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
       var coords = new SL.Coordinates(1,1);
       list = map.getSimilarAvailableDirections(coords, Direction.NORTH);
       assert( list.length === 2 ,"List was wrong size: " + list.length );
@@ -618,7 +479,7 @@ describe("GridMap",function() {
       var list;
       var entity = getMockEntity();
       entity.coords = new SL.Coordinates(9,8);
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
       var coords = new SL.Coordinates(9,9);
       list = map.getAvailableDirections(coords);
       assert( list.length === 2 ,"List was wrong size: " + list.length );
@@ -633,7 +494,7 @@ describe("GridMap",function() {
       var list;
       var entity = getMockEntity();
       entity.coords = new SL.Coordinates(9,8);
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
       var coords = new SL.Coordinates(9,9);
       list = map.findAdjacentFreeCoordinates(coords);
       assert( list.length === 2 ,"List was wrong size: " + list.length );
@@ -694,19 +555,19 @@ describe("GridMap",function() {
       var map = getMap();
       var entity1 = getMockEntity();
       entity1.coords = new SL.Coordinates(1,1);
-      map.get(entity1.coords).setContents(entity1);
+      map.getGridCell(entity1.coords).setContents(entity1);
 
       var entity2 = getMockEntity();
       entity2.coords = new SL.Coordinates(9,9);
-      map.get(entity2.coords).setContents(entity2);
+      map.getGridCell(entity2.coords).setContents(entity2);
 
       var entity3 = getMockEntity();
       entity3.coords = new SL.Coordinates(1,9);
-      map.get(entity3.coords).setContents(entity3);
+      map.getGridCell(entity3.coords).setContents(entity3);
 
       var entity4 = getMockEntity();
       entity4.coords = new SL.Coordinates(9,1);
-      map.get(entity4.coords).setContents(entity4);
+      map.getGridCell(entity4.coords).setContents(entity4);
 
       assert( map.entitiesHaveLineOfSight(entity1, entity4) === true , "entity 1 & 4 should have line of sight" );
       assert( map.entitiesHaveLineOfSight(entity2, entity1) === true , "entity 2 & 1 should have line of sight" );
@@ -718,23 +579,23 @@ describe("GridMap",function() {
       var map = getMap();
       var entity1 = getMockEntity();
       entity1.coords = new SL.Coordinates(1,1);
-      map.get(entity1.coords).setContents(entity1);
+      map.getGridCell(entity1.coords).setContents(entity1);
 
       var obstacle1 = getMockEntity();
       obstacle1.coords = new SL.Coordinates(1,3);
-      map.get(obstacle1.coords).setContents(obstacle1);
+      map.getGridCell(obstacle1.coords).setContents(obstacle1);
 
       var entity3 = getMockEntity();
       entity3.coords = new SL.Coordinates(1,9);
-      map.get(entity3.coords).setContents(entity3);
+      map.getGridCell(entity3.coords).setContents(entity3);
 
       var entity4 = getMockEntity();
       entity4.coords = new SL.Coordinates(9,1);
-      map.get(entity4.coords).setContents(entity4);
+      map.getGridCell(entity4.coords).setContents(entity4);
 
       var obstacle2 = getMockEntity();
       obstacle2.coords = new SL.Coordinates(5,1);
-      map.get(obstacle2.coords).setContents(obstacle2);
+      map.getGridCell(obstacle2.coords).setContents(obstacle2);
 
       assert( map.entitiesHaveLineOfSight(entity1, entity4) === false , "entity 1 & 4 should not have line of sight" );
       assert( map.entitiesHaveLineOfSight(entity1, entity3) === false , "entity 1 & 3 should not have line of sight" );
@@ -841,11 +702,11 @@ describe("GridMap",function() {
 
       var entity = getMockEntity();
       entity.coords = badCoords1;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       entity = getMockEntity();
       entity.coords = badCoords2;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       var list = map.findPath(start, end);
 
@@ -869,15 +730,15 @@ describe("GridMap",function() {
 
       var entity = getMockEntity();
       entity.coords = badCoords1;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       entity = getMockEntity();
       entity.coords = badCoords2;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       entity = getMockEntity();
       entity.coords = badCoords3;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       var list = map.findPath(start, end);
 
@@ -899,11 +760,11 @@ describe("GridMap",function() {
 
       var entity = getMockEntity();
       entity.coords = badCoords1;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       entity = getMockEntity();
       entity.coords = badCoords2;
-      map.get(entity.coords).setContents(entity);
+      map.getGridCell(entity.coords).setContents(entity);
 
       var list = map.findPath(start, end);
 
@@ -1074,11 +935,11 @@ describe("GridMapNeighborProvider", function() {
       var node = new AStarNode(coords, null, 0);
       var np = new GridMapNeighborProvider(node, map);
       var entity = getMockEntity();
-      var cell = map.get(entity.coords);
+      var cell = map.getGridCell(entity.coords);
       cell.setContents(entity);
       entity = getMockEntity();
       entity.coords = new SL.Coordinates(0,1);
-      cell = map.get(entity.coords);
+      cell = map.getGridCell(entity.coords);
       cell.setContents(entity);
 
       var neighbor, expected;

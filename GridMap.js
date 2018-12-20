@@ -51,30 +51,12 @@ SL.GridMap.prototype.normalizeDistance = function (distance) {return distance / 
 SL.GridMap.prototype.normalizeManhattanDistance = function (distance) {return distance / this.manhattanMaxDistance;};
 SL.GridMap.prototype.normalizeSpecialManhattanDistance = function (distance) {return distance / this.specialManhattanMaxDistance;};
 
-/** Removes an entity from the map.  Does not destroy the entity.
-* @param entity {Entity} the entity to be removed.
-*/
-SL.GridMap.prototype.removeEntity = function (entity) {
-  // Break the link
-  var gridCell = this.get(entity.getCoords());
-  gridCell.setContents(null);
-};
-
 /** Checks if the cell at the provided coordinates is inbounds and freee free.
 * @param coords {Coordinates} the coordinates to check.
-* @return {boolean} True if the coordinates are in map bunds and not occupied; false otherwise.
+* @return {boolean} True if the coordinates are in map bounds and not occupied; false otherwise.
 */
 SL.GridMap.prototype.isFree = function (coords) {
-  return this.isFreeXY(coords.x,coords.y);
-};
-
-/** Checks if the cell at the provided x and y values is inbounds and freee free.
-* @param x {int} the x coordinate to check.
-* @param y {int} the y coordinate to check.
-* @return {boolean} True if the coordinates are in map bunds and not occupied; false otherwise.
-*/
-SL.GridMap.prototype.isFreeXY = function (x,y) {
-  if (this.isInBoundsXY(x, y) && this.cells[y][x].isFree())
+  if (this.isInBounds(coords) && this.cells[coords.y][coords.x].isFree())
     return true;
   return false;
 };
@@ -88,46 +70,31 @@ SL.GridMap.prototype.isInBounds = function (coords) {
   return false;
 };
 
-/** Checks if the specified x y values are in the bounds of the map.
-* @param x {int} the x coordinate to check
-* @param y {int} the y coordinate to check
-* @return {boolean} true if the coords are in bounds, false otherwise.
-*/
-SL.GridMap.prototype.isInBoundsXY = function (x, y) {
-  if (x >= 0 && x < this.width && y >=0 && y < this.height) return true;
-  return false;
-};
-
 /** Retrieve the gridCell at the specified coordinates.  Does not perform bounds checking.
-* @param coords {Coordinates} the coordinates for the desired cell.
+* @param coords {Coordinates} the coordinates.
 * @return {gridCell} the grid cell
 */
-SL.GridMap.prototype.get = function (coords) {
+SL.GridMap.prototype.getGridCell = function (coords) {
   return this.cells[coords.y][coords.x];
 };
 
-/** Retrieve the gridCell at the specified coordinates.  Does not perform bounds checking.
-* @param x {int} the x coordinate for the desired cell.
-* @param y {int} the y coordinate for the desired cell.
+/** Retrieve the contents of the gridcell at the specified coordinates.
+* Does not perform bounds checking.
+* @param coords {Coordinates} the coordinates.
 * @return {gridCell} the grid cell
 */
-SL.GridMap.prototype.getXY = function (x,y) {
-  return this.cells[y][x];
+SL.GridMap.prototype.getContents = function (coords) {
+  return this.getGridCell(coords).getContents();
 };
 
-/** Moves the entity from its current location to the specified loation.
-* @param entity {Entity} the entity to move
-* @param coords {Coordinates} the target coordinates.
+/** Set the contents of the gridcell at the specified coordinates.
+* Does not perform bounds checking.
+* @param contents {Object} the contents.
+* @param coords {Coordinates} the coordinates.
+* @return {gridCell} the grid cell
 */
-SL.GridMap.prototype.moveEntityTo = function (entity, coords) {
-  if (!this.isFree(coords)) {
-    throw new Error("SL.GridMap: entity sought Coordinates " + coords.x + ", " + coords.y + " but that gridCell is not available.");
-  }
-  var gridCell = this.get(entity.getCoords());
-  gridCell.setContents(null);
-  gridCell = this.get(coords);
-  gridCell.setContents(entity);
-  entity.setCoords(coords);
+SL.GridMap.prototype.setContents = function (contents, coords) {
+  return this.getGridCell(coords).setContents(contents);
 };
 
 /**
@@ -149,35 +116,15 @@ SL.GridMap.prototype.findAvailableDirectionsForCoordinates = function (coords) {
 * @param c {Coordinates} coordinates
 * @returns {Array} list of entities
 */
-SL.GridMap.prototype.buildListOfAdjacentEntities = function(c) {
+SL.GridMap.prototype.getListOfAdjacentEntities = function(c) {
   var list = [];
   var adjacent;
   var entity;
   for (var i = 0; i < SL.Direction.values.length; i++) {
     adjacent = SL.GridMap.directionToCoordinates(SL.Direction.values[i], c);
     if (this.isInBounds(adjacent)) {
-      entity = this.get(adjacent).getContents();
+      entity = this.getContents(adjacent);
       if (null !== entity) list.push(entity);
-    }
-  }
-  return list;
-};
-
-/**
-* Build a list of entities of a given type that occur around (but not including) a point.
-* @param c {Coordinates} coordinates
-* @param type {String} String identifier for the entity.  Must match entity.getType() for the entity to be included.
-* @returns {Array} list of directions
-*/
-SL.GridMap.prototype.buildListOfSpecificAdjacentEntities = function(c, type) {
-  var list = [];
-  var adjacent;
-  var entity;
-  for (var i = 0; i < SL.Direction.values.length; i++) {
-    adjacent = SL.GridMap.directionToCoordinates(SL.Direction.values[i], c);
-    if (this.isInBounds(adjacent)) {
-      entity = this.get(adjacent).getContents();
-      if (null !== entity && entity.getType() === type) list.push(entity);
     }
   }
   return list;
@@ -195,7 +142,7 @@ SL.GridMap.prototype.getListOfEntitiesInRange = function(topLeft, bottomRight, t
 	var list = [];
 	for (var y = topLeft.y; y <= bottomRight.y; y++) {
 		for (var x = topLeft.x; x <= bottomRight.x; x++) {
-			entity = this.getXY(x, y).getContents();
+			entity = this.getContents(new SL.Coordinates(x, y));
 			if (null !== entity) {
         if (type === undefined || type === null || entity.getType() === type) {
            list.push(entity);
@@ -490,7 +437,7 @@ SL.GridMap.prototype.entitiesHaveLineOfSight = function(one, other) {
 
 /** Finds the shortest path between the start coords and the goal coords, if one exists.
 * @param {SL.Coordinates} start the coordinates to start searching from.
-* @param {SL.Coordinates} goal the coordiantes to find a path to
+* @param {SL.Coordinates} goal the coordinates to find a path to
 * @return {Array<SL.Coordinates>} A list of coordinates, from start to goal inclusive; null if no path was found.
 */
 SL.GridMap.prototype.findPath = function(start, goal) {
