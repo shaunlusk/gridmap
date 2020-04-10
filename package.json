@@ -18,10 +18,10 @@
   "author": "Shaun Lusk",
   "license": "MIT",
   "dependencies": {
-    "blanket": "^1.2.3",
-    "slcommon": "shaunlusk/slcommon#0.1.2"
+    "slcommon": "shaunlusk/slcommon#1.1.4"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "jsdoc": "^3.6.4",
+    "mocha": "^7.1.1"
   }
 }
