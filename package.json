@@ -2,13 +2,10 @@
   "name": "gridmap",
   "version": "0.2.0",
   "description": "A simple grid-based map in JavaScript for games and similar applications.",
-  "main": "GridMap.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/shaunlusk/gridmap.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "javascript",
@@ -20,8 +17,23 @@
   "dependencies": {
     "slcommon": "shaunlusk/slcommon#1.1.4"
   },
+  "scripts": {
+    "build": "npm run test && npm run build:docs && webpack --config webpack.config.js",
+    "build:dev": "webpack --config webpack.dev.config.js",
+    "test": "node ./node_modules/jest/bin/jest ./test --colors --coverage",
+    "build:docs": "node ./node_modules/jsdoc/jsdoc.js -R README.MD -d docs ./src/"
+  },
   "devDependencies": {
-    "jsdoc": "^3.6.4",
-    "mocha": "^7.1.1"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/register": "^7.9.0",
+    "babel-jest": "^25.2.6",
+    "babel-loader": "^8.1.0",
+    "mocha": "^7.1.1",
+    "jsdoc": "^3.6.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
