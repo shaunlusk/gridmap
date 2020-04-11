@@ -1,4 +1,4 @@
-import {Utils} from 'slcommon/src/Utils';
+import Utils from 'slcommon/src/Utils';
 
 /** @class Node class for {@link AStarPathFinder AStarPathFinder}.
 * Acts as a container for arbitrary map nodes or elements.

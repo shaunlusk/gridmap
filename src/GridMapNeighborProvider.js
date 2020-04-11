@@ -1,4 +1,4 @@
-import AstarNode from './AStarNode';
+import AStarNode from './AStarNode';
 import GridMap from './GridMap';
 import Direction from './Direction';
 

@@ -1,9 +1,11 @@
+import INeighborProviderFactory from "./INeighborProviderFactory";
+
 /** INeighborProvider
 * Provides neighbors for a given node.
 * (Must iterate over all neighbors, returning null when none are left).
 * @interface
 */
-INeighborProvider = function() {};
+const INeighborProvider = function() {};
 /**
 * Retrieves the next available neighbor.
 * @function
@@ -11,3 +13,5 @@ INeighborProvider = function() {};
 * @returns {Node<T>} returns the next neighbor for the current node, or null if none remain.
 */
 INeighborProvider.prototype.next = function() { throw new Error('not implemented'); };
+
+export default INeighborProviderFactory;

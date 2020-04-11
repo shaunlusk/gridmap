@@ -1,6 +1,10 @@
 import Direction from './Direction';
-import GridMapNeighborProvider from './GridMapNeighborProvider';
 import GridMapNeighborProviderFactory from './GridMapNeighborProviderFactory';
+import Coordinates from './Coordinates';
+import AStarPathFinder from './AStarPathFinder';
+import AStarNode from './AStarNode';
+import IHeuristicProvider from './IHeuristicProvider';
+
 
 /**
 * @class For representing a 2d map as a grid of cells.

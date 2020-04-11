@@ -1,9 +1,9 @@
-function assert(statement, desc) {
+export function assert(statement, desc) {
   if (statement) return true;
   throw "Fail: " + desc;
 }
 
-function throwsException(callback) {
+export function throwsException(callback) {
   var threwit = false;
   try {
     callback();

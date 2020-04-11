@@ -2,7 +2,7 @@
 * Responsible for creating a neighbor provider for a given AStarNode.
 * @interface
 */
-INeighborProviderFactory = function() {};
+const INeighborProviderFactory = function() {};
 /**
 * @function
 * @name INeighborProviderFactory#getProvider
@@ -10,3 +10,5 @@ INeighborProviderFactory = function() {};
 * @returns {Node<T>} gets a neighbor provider
 */
 INeighborProviderFactory.prototype.getProvider = function(node) { throw new Error('not implemented'); };
+
+export default INeighborProviderFactory;

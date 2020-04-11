@@ -1,3 +1,4 @@
+import GridMapNeighborProvider from './GridMapNeighborProvider';
 /** @class Factory to instantiate GridMapNeighborProvider
 * @param map {GridMap} the grid map to use to create the neighbor provider
 *

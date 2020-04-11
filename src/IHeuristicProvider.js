@@ -3,7 +3,7 @@
 * Provides an estimate of the past cost from node to goal.
 * @interface
 */
-IHeuristicProvider = function() {};
+const IHeuristicProvider = function() {};
 /** h()
 * @function
 * @name IHeuristicProvider#h
@@ -12,3 +12,5 @@ IHeuristicProvider = function() {};
 * @returns {int} Estimate of path cost from goal to node.
 */
 IHeuristicProvider.prototype.h = function(node, goal) { throw new Error('not implemented'); };
+
+export default IHeuristicProvider;

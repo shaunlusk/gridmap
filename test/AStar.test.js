@@ -1,7 +1,6 @@
-var SL = SL || {};
-var AStar = SL.AStar;
-var AStarNode = SL.AStarNode;
-var AStarPathFinder = SL.AStarPathFinder;
+import AStarNode from '../src/AStarNode';
+import AStarPathFinder from '../src/AStarPathFinder';
+import { assert, throwsException } from './testUtil';
 
 describe("AStarNode", function(){
   describe("#compareTo()", function(){

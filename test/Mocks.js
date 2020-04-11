@@ -1,5 +1,6 @@
+import Coordinates from '../src/Coordinates';
 
-function getMockGridCell() {
+export function getMockGridCell() {
   var cell = {
     availableToEntityRetVal : true,
     isFree : function(){return true;},
@@ -15,8 +16,8 @@ function getMockGridCell() {
   return cell;
 }
 
-function getMockEntity() {
-  var coords = new SL.Coordinates(1,1);
+export function getMockEntity() {
+  var coords = new Coordinates(1,1);
   var entity = {
     coords:coords,
     type:"test",
@@ -26,3 +27,4 @@ function getMockEntity() {
   };
   return entity;
 }
+
