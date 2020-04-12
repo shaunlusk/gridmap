@@ -6,15 +6,15 @@ import GridCell from './GridCell';
 * Creates empty {@link GridCell GridCells} for each point on the map.
 * @see {@link IGridCellFactory IGridCellFactory}
 */
-export default class DefaultGridCellFactory {
+class DefaultGridCellFactory {
   /** Generate the {@link GridCell GridCell} for the provided coordinates.
   * @param x {int} The x coordinate.
   *	@param y {int} The y coordinate.
   * @returns {GridCell}
   */
-  getGridCell = function (x,y) {
+  getGridCell(x,y) {
     return new GridCell();
   }
 };
 
-
+export default DefaultGridCellFactory;

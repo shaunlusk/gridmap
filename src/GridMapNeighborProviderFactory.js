@@ -3,7 +3,7 @@ import GridMapNeighborProvider from './GridMapNeighborProvider';
 * @param map {GridMap} the grid map to use to create the neighbor provider
 *
 */
-export default class GridMapNeighborProviderFactory{
+class GridMapNeighborProviderFactory{
   constructor(map) {
     this._map = map;
   }
@@ -17,3 +17,5 @@ export default class GridMapNeighborProviderFactory{
   }
 
 }
+
+export default GridMapNeighborProviderFactory;

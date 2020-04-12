@@ -8,7 +8,7 @@ import Utils from 'slcommon/src/Utils';
 * @param g {int} This node's g() cost.
 * @see AStarPathFinder
 */
-export default class AStarNode {
+class AStarNode {
 	constructor(element, parent, g) {
 		/** @property element {Object} Any object; must implement "equals()" */
 		this.element = element;
@@ -65,3 +65,5 @@ export default class AStarNode {
 		return 1;
 	}
 }
+
+export default AStarNode;

@@ -3,7 +3,7 @@
 * @param x {int} x coord
 * @param y {int} y coord
 */
-export default class Coordinates {
+class Coordinates {
   constructor(x,y) {
     /** the x coordinate */
     this.x = x;
@@ -24,3 +24,5 @@ export default class Coordinates {
   }
 
 }
+
+export default Coordinates;

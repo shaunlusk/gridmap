@@ -1,6 +1,6 @@
 {
   "name": "gridmap",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A simple grid-based map in JavaScript for games and similar applications.",
   "main": "index.js",
   "repository": {

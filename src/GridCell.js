@@ -1,8 +1,9 @@
-/**
-* @class Used by the {@link GridMap GridMap}.  Represents a cell on the map.
-* @param contents {GridMapEntity} An entity to occupy the cell.  Null is an acceptable value.
-*/
-export default class GridCell {
+
+class GridCell {
+  /**
+  * Used by the {@link GridMap GridMap}.  Represents a cell on the map.
+  * @param contents {GridMapEntity} An entity to occupy the cell.  Null is an acceptable value.
+  */
   constructor(contents) {
     this._contents = contents === undefined ? null : contents;
   }
@@ -23,3 +24,5 @@ export default class GridCell {
   isFree() {	return this._contents === null;	}
 
 }
+
+export default GridCell;

@@ -10,7 +10,7 @@ import Direction from './Direction';
 * @param parent {AStarNode} the node to get neighbors for.
 * @param map {GridMap} the map
 */
-export default class GridMapNeighborProvider {
+class GridMapNeighborProvider {
   constructor(parent, map) {
     this._parent = parent;
     this._coords = parent.element;
@@ -19,7 +19,7 @@ export default class GridMapNeighborProvider {
   }
 
   /** Retrieve the next neighbor.
-  * @override .
+  * @override
   * @return {AStarNode} a node containing the coordinates for a neighboring map cell; null if none remain.
   */
   next() {
@@ -34,3 +34,5 @@ export default class GridMapNeighborProvider {
     return new AStarNode(neighborCoords, this._parent, 0);
   }
 }
+
+export default GridMapNeighborProvider;

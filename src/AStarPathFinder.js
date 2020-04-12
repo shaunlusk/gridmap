@@ -17,7 +17,7 @@ import PriorityQueue from 'slcommon/src/PriorityQueue';
 * INeighborProvider provides the neighbors for a given point.
 * @param hProvider {IHeuristicProvider} Exposes a method that provides a heuristic estimate of distance between a given node and the goal.
 */
-export default class AStarPathFinder {
+class AStarPathFinder {
 	constructor(start, goal, depthConstraint, /*INeighborProviderFactory<T>*/ neighborProviderFactory, /*IHeuristicProvider<T>*/ hProvider) {
 		this.open = new PriorityQueue();
 		this.closed = {};
@@ -34,7 +34,7 @@ export default class AStarPathFinder {
 	* If a complete path cannot be found, it will return only the starting node.  If the depth constraint is hit, the best partial path is returned.
 	* @return {Array<AStarNode>} An array containing the best sequence of nodes from the start to the goal, if such a path could be found.
 	*/
-	execute = function() {
+	execute() {
 		var current;
 		this.best.f = this.hProvider.h(this.best, this.goal);
 
@@ -85,7 +85,7 @@ export default class AStarPathFinder {
 	* @param node {AStarNode} The node
 	* @return {Array<AStarNode>} The list
 	*/
-	_getPath = function(node) {
+	_getPath(node) {
 		var reversePath = [], path = [];
 		var n = node;
 		do {
@@ -98,3 +98,5 @@ export default class AStarPathFinder {
 		return path;
 	}
 }
+
+export default AStarPathFinder;

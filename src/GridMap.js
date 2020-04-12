@@ -9,7 +9,7 @@ import IHeuristicProvider from './IHeuristicProvider';
 /**
 * @class For representing a 2d map as a grid of cells.
 */
-export default class GridMap {
+class GridMap {
   constructor(width, height) {
     /** The horizontal count of cells of the map */
     this.width = width;
@@ -501,3 +501,5 @@ GridMap.getSimilarDirections = function(direction) {
 	list.push(Direction.values[(Direction.ordinal(direction)+7)%8]);
 	return list;
 };
+
+export default GridMap;
