@@ -1,6 +1,6 @@
 {
   "name": "gridmap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple grid-based map in JavaScript for games and similar applications.",
   "main": "index.js",
   "repository": {
@@ -24,7 +24,7 @@
     "build:docs": "node ./node_modules/jsdoc/jsdoc.js -R README.MD -d docs ./src/"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
+    "@babel/cli": "^7.13.16",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
@@ -32,7 +32,7 @@
     "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
     "jest": "^25.3.0",
-    "jsdoc": "^3.6.3",
+    "jsdoc": "^3.6.7",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   }
